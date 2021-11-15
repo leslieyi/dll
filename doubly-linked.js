@@ -136,7 +136,7 @@ class DoublyLinkedList {
     let removedNode = this.get(index);
     let beforeNode = removedNode.prev; 
     let afterNode = removedNode.next; 
-    
+
     beforeNode.next = afterNode; 
     afterNode.prev = beforeNode
     // removedNode.prev.next = removedNode.next;
@@ -157,3 +157,14 @@ list.push(2);
 list.push("LOL");
 list.push("Bye");
 // console.log(list.remove(4));
+
+
+//Insertion o(1)
+//Removal o(1)
+//Searching o(N)
+//Access o(n)
+
+//teachnically searching is o(n/2) but it's still on o(n), as N grows
+//Doubly Linked almost the same, except one pointer, prev node. 
+//Think about browser history, 
+//Doubly is better for finding nodes. JUST takes up more memory!
