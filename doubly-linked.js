@@ -74,13 +74,86 @@ class DoublyLinkedList {
     return this;
   }
 
-  get(){
-      
+  get(index) {
+    //we are going to check if the item is closer to the beginning or the end, head or tails
+    //edgecase: check if the index is valid.
+    if (index < 0 || index >= this.length) return null; //undefined
+    let count, current;
+    if (index <= this.length / 2) {
+      //   console.log("working from start");
+      count = 0;
+      current = this.head;
+      while (count != index) {
+        current = current.next;
+        count++;
+      }
+    } else {
+      //   console.log("working from end");
+      count = this.length - 1;
+      current = this.tail;
+      while (count !== index) {
+        current = current.prev;
+        count--;
+      }
+    }
+    return current;
+  }
+
+  set(index, val) {
+    let foundNode = this.get(index);
+    if (foundNode != null) {
+      foundNode.val = val;
+      return true;
+    }
+    return false;
+  }
+  insert(index, val) {
+    //remove two connections. old previous and old current pointing at the new node.
+    //four patches you gotta make.
+    if (index < 0 || index > this.length) return false;
+    if (index === 0) return !!this.unshift(val); //add to the beginning of, !! turn it into a boolean
+    if (index === this.length) return !!this.push(val); //coercing into a boolean
+
+    let newNode = new Node(val);
+    let beforeNode = this.get(index - 1);
+    let afterNode = beforeNode.next;
+
+    (beforeNode.next = newNode), (newNode.prev = beforeNode);
+    (newNode.next = afterNode), (afterNode.prev = newNode);
+
+    this.length++;
+    return true;
+  } //A B C Hello D E F
+
+  remove(index) {
+    //use get method. check if index is valid, if index is 0, shift! if index = length-1 use pop.
+    //other wise get method to remove.
+    //set the next and prev to null on the found node.  PATCH two places
+    if (index < 0 || index >= this.length) return undefined; //if we are removing, it needs to be equal
+    if (index === 0) return this.shift();
+    if (index === this.length - 1) return this.pop();
+
+    let removedNode = this.get(index);
+    let beforeNode = removedNode.prev; 
+    let afterNode = removedNode.next; 
+    
+    beforeNode.next = afterNode; 
+    afterNode.prev = beforeNode
+    // removedNode.prev.next = removedNode.next;
+    // removedNode.next.prev = removedNode.previous;
+
+    removed.next = null;
+    removed.prev = null;
+    this.length--;
+    return removedNode;
+    // A B C D E F  trying to move C b.next = d
   }
 }
 
 list = new DoublyLinkedList();
 list.push(1);
 list.push(2);
-list.push(3);
-console.log(list);
+list.push(2);
+list.push("LOL");
+list.push("Bye");
+// console.log(list.remove(4));
