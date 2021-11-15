@@ -48,15 +48,34 @@ class DoublyLinkedList {
     //removes beginning node. find the current head. currenthead.next = Newhead. return the old head.next = null, newHead.prev= null
     if (this.length === 0) return undefined;
     let oldHead = this.head;
-    if(this.length === 1) {
-        this.head = null;
-        this.tail = null;
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      this.head = oldHead.next;
+      this.head.prev = null; //removing the relationship 99 -> 199
+      oldHead.next = null; // 99 -> null
     }
-    this.head = oldHead.next;
-    this.head.prev = null; //removing the relationship 99 -> 199
-    oldHead.next = null; // 99 -> null 
-    this.length--
+    this.length--;
     return oldHead;
+  }
+  unshift(val) {
+    //make new node, make new node point.next to head. current.prev is newnode.
+    let newNode = new Node(val);
+    if (this.length === 0) {
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      this.head.prev = newNode;
+      newNode.next = this.head;
+      this.head = newNode; //updating
+    }
+    this.length++;
+    return this;
+  }
+
+  get(){
+      
   }
 }
 
@@ -64,5 +83,4 @@ list = new DoublyLinkedList();
 list.push(1);
 list.push(2);
 list.push(3);
-list.shift();
 console.log(list);
