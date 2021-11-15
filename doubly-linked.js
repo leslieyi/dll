@@ -15,7 +15,8 @@ class DoublyLinkedList {
   push(val) {
     let newNode = new Node(val);
     if (this.length === 0) {
-      /*if list is empty*/ this.head = newNode;
+      /*if list is empty*/ 
+      this.head = newNode;
       this.tail = newNode;
     } else {
       this.tail.next = newNode;
